@@ -16,6 +16,7 @@ Including another URLconf
 from accounts.views import login_view, logout_view, register_view
 from django.contrib import admin
 from django.urls import include, path
+from orders.views import order_checkout_view
 from products.views import (
     home_view,
     product_create_view,
@@ -34,4 +35,5 @@ urlpatterns = [
     path("products/<int:id>", product_detail_view),
     path("products", product_list_view),
     path("products/create", product_create_view),
+    path("checkout/", order_checkout_view, name="checkout"),
 ]
