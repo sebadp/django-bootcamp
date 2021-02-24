@@ -1,7 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .forms import ProductForm
 from .models import Product
@@ -44,7 +44,7 @@ def product_create_view(request, *args, **kwargs):
     # form=ProductForm()
     # if request.method= "POST":
     #     form = ProductForm(request.POST)
-
+    #     return redirect("/exito")
     # LO MISMO SE LOGRA CON LA PROXIMA LINEA:
     form = ProductForm(request.POST or None)
 
@@ -56,6 +56,8 @@ def product_create_view(request, *args, **kwargs):
         obj = form.save(commit=False)
         # entremedio uno podría trabajar sobre obj y luego:
         obj.save()
+        #     return redirect("/exito") ## Redireccionar es la buena práctica, EN este caso
+        #     vamos a renderizar unformulario vacío para seguir con las prácticas.
 
         form = ProductForm()  # con esto reseteamos el contenido del form
 
