@@ -16,10 +16,7 @@ class ProductTestCase(TestCase):
     def setUp(self):
         user_a = User(username="UsuariodePrueba", email="usuario@deprueba.com")
         self.user_a = user_a
-        user_a_pw = "contrasenia"
-        self.user_a_pw = user_a_pw
-
-        user_a.set_password(user_a_pw)
+        user_a.set_password("contrasenia")
         user_a.save()
         user_a.is_staff = True
         user_a.is_superuser = False
@@ -55,6 +52,6 @@ class ProductTestCase(TestCase):
         """
         Tendría que retornar True si le permite al usuario staff crear el producto.
         """
-        self.client.login(username=self.user_a.username, password=self.user_a_pw)
-        response = self.client.post("/products/create/", {"title": "Esto es un producto de prueba."})
-        self.assertEqual(response.status_code, 200)
+        self.client.login(username=self.user_a.username, password="contrasenia")
+        response = self.client.post("/products/create", {"title": "Esto es un producto de prueba."})
+        self.assertEqual(response.status_code, 302)
