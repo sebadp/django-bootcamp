@@ -1,5 +1,6 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render
 
 from .forms import ProductForm
@@ -15,7 +16,10 @@ def home_view(request, *args, **wkargs):
 
 
 def product_detail_view(request, *args, **kwargs):
-    obj = Product.objects.get(id="1")
+    try:
+        obj = Product.objects.get(id="1")
+    except Product.DoesNotExist:
+        raise Http404
     return render(request, "products/products_detail.html", {"obj": obj})
 
 
