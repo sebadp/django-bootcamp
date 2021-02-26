@@ -36,14 +36,14 @@ class Order(models.Model):
         if custom_amount != None:
             paid_amount = custom_amount
         self.paid = paid_amount
-        self.status = 'paid'
-        if not self.inventory_updated and instance.product:
-            instance.product.remove_item_from_inventory(save=True)
+        self.status = "paid"
+        if not self.inventory_updated and self.product:
+            self.product.remove_item_from_inventory(count=1, save=True)
 
             self.inventory_updated = True
         if save == True:
             self.save()
-        retunr self.paid
+        return self.paid
 
     def calculate(self):
         if not self.product:
@@ -67,4 +67,4 @@ def order_pre_save(sender, instance, *args, **kwargs):
     instance.calculate(save=False)
 
 
-pre_save.conect(order_pre_save, sender=Order)
+pre_save.connect(order_pre_save, sender=Order)
