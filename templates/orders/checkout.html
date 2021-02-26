@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="." method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <p>
+        <b>Subtotal</b>{{ object.subtotal}}
+    </p>
+    <p>
+        <b>Tax</b>{{ object.tax}}
+    </p>
+    <p>
+        <b>Total</b>{{ object.Total}}
+    </p>
+
+    <button type="submit">Send Data</button>
+</form>
+{% endblock content %}
