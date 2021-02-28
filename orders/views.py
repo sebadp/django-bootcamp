@@ -13,8 +13,10 @@ from .models import Order
 def order_checkout_view(request):
     qs = Product.objects.filter(featured=True)
     if not qs.exists():
-        return redirect("/")
+        return redirect("/no-inventory")
     product = qs.first()
+    if not product.has_inventory:
+        return redirect("/no")
     user = request.user
     order_id = request.session.get("order_id")
     order_obj = None
